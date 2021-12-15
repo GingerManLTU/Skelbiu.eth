@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Patrick skelbiu.lt</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+
+      <box style="float: right;">
+      <button id="loginButton" onclick="loginWithMetaMask()" ></button>
+      <p id='userWallet'  style="float: right;"></p>
+
+    </box>
+      <div class="row">
+        <div class="col-xs-12 col-sm-8 col-sm-push-2">
+
+
+            <script>
+              let check = false;
+              window.userWalletAddress=null
+              const loginButton = document.getElementById('loginButton')
+              loginButton.innerText = "Show address"
+              const userWallet = document.getElementById("userWallet")
+
+              async function loginWithMetaMask() {
+                if (check == false) {
+                  await window.ethereum.enable();
+                  const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                  const account = accounts[0];
+                  name = account;
+                  userWallet.innerText = name;
+                  window.ethereum.on('accountsChanged', function (accounts) {
+                    // Time to reload your interface with accounts[0]!
+                    console.log(accounts[0]);
+                    window.userWalletAddress = accounts[0]
+                    userWallet.innerText = window.userWalletAddress
+
+
+                  })
+                  check = true
+                  loginButton.innerText = "Hide address"
+                } else {
+                  userWallet.innerText = ""
+                  check = false
+                  loginButton.innerText = "Show address"
+                }
+                }
+
+            </script>
+
+          <h1 class="text-center">Patrick Skelbiu.ETH</h1>
+          <box style="margin: auto; width: 50%; padding: 10px" >
+
+            <input type="text" placeholder="Enter Item"  id="item" required>
+            <input type="number" placeholder="Enter Cost"  id="cost" required>
+            <input type="text" placeholder="Enter Location"  id="location" required>
+            <select name = "types" id = "types">
+
+              <option value=1>Television</option>
+              <option value=2>Phone</option>
+              <option value=3>Bike</option>
+              <option value=4>Other</option>
+
+            </select>
+            <button type="submit" onclick="App.addItems()" >Add</button>
+            <script>
+
+
+
+            </script>
+
+          </box>
+
+          <hr/>
+          <br/>
+        </div>
+      </div>
+
+      <div id="itemsToRentRow" class="row">
+        <!-- ITEMS LOAD HERE -->
+      </div>
+    </div>
+
+    <div id="itemTemplate" style="display: none;">
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="panel panel-default panel-pet">
+          <div class="panel-heading">
+            <h3 class="panel-title">Scrappy</h3>
+          </div>
+          <div class="panel-body">
+            <img alt="140x140" data-src="holder.js/140x140" class="img-rounded img-center" style="width: 100%;" src="data:image/png;base64,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" data-holder-rendered="true">
+            <br/><br/>
+           <!-- <strong>Item model</strong>: <span class="pet-breed">Golden Retriever</span><br/> -->
+            <strong>Price per day</strong>: <span class="rent-cost">3</span><br/>
+            <strong>Location</strong>: <span class="item-location">Warren, MI</span><br/><br/>
+            <button class="btn btn-default btn-buy" type="button" data-id="0">Buy</button>
+            <button class="btn btn-default btn-change" type="button" data-id="0" onclick="App.buyItems()">Change</button>
+            <button class="btn btn-default btn-remove" type="button" data-id="0" onclick="App.buyItems()">Remove</button>
+            <button>labas</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/web3.min.js"></script>
+    <script src="js/truffle-contract.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
