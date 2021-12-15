@@ -93,7 +93,6 @@ contract Tests {
         for (int i = 1; i <= ItemCount; i++)
         {
                 result[i] = Items[i].id;
-
         }
         return result;
     }
