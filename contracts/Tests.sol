@@ -84,4 +84,18 @@ contract Tests {
         delete Items[id];
 
     }
+
+    function addedItems() public view returns(int256[] memory)
+    {
+
+        int256[] memory result = new int256[](ItemCount);
+
+        for (int i = 1; i <= ItemCount; i++)
+        {
+                result[i] = Items[i].id;
+
+        }
+        return result;
+    }
+
 }
