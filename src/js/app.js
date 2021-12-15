@@ -72,24 +72,19 @@ App = {
   getAllItems: function() {
 
     var Tests;
-    console.log("bltt")
     App.contracts.Tests.deployed().then(function (instance) {
 
       Tests = instance;
-      let cAccount = web3.currentProvider.selectedAddress;
+      return Tests.ItemCount().call();
+    }).then(async function (count) {
 
-      return Tests.addedItems({from:cAccount});
-
-    }).then(async function (itemsIds) {
-
-      var ids = itemsIds;
       var itemRow = $('#itemsToRentRow');
       var itemTemplate = $('#itemTemplate');
       console.log("isspausdink mane jei gali")
 
-      for (var i = 0; i < ids.length; i++) {
+      for (var i = 0; i < count; i++) {
 
-        var id = ids[i].c[0]
+        var id = i;
 
         await Tests.GetItemName(id).then(function (result) {
           itemTemplate.find('.panel-title').text(result);
